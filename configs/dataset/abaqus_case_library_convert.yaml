@@ -1,0 +1,10 @@
+convert_abaqus_case_library:
+  dataset_root: "./data/frame99-7500"
+  output_dir: "./data/frame99-7500/npz_release"
+  rhs_mode: "load"
+  solve_mode: "zero_placeholder"
+  bh_solve_mode: "zero_placeholder"
+  # null => auto-select a conservative process count at runtime.
+  num_workers: null
+  compress_npz: false
+  write_per_case_manifest: false

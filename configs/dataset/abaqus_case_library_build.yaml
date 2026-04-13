@@ -1,0 +1,12 @@
+build_abaqus_case_library:
+  # Optional: point to a custom dataset-rules YAML.
+  # dataset_rules_config: "./configs/dataset/abaqus_case_library_rules.yaml"
+  dataset_id: "frame99-7500"
+  baseline_type: "pure_frame"
+  master_inp: "./abaqus_model/frame99-7500/master/Job-frame99-7500.inp"
+  output_root: "./data"
+  mode: "cases"
+  seed: 42
+  num_cases: 500
+  abaqus_command: "abaqus"
+  cpus: 4

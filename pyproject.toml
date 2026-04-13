@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dpcg"
+version = "0.1.0"
+description = "Lightweight reproducible DPCG release for Abaqus-to-SUNet0 workflows"
+authors = [{ name = "Guo Zhike" }]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.23",
+  "scipy>=1.10",
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.4",
+  "ruff>=0.4.0",
+]
+train = [
+  "tensorboard>=2.14",
+]
+
+[project.scripts]
+dpcg-build-dataset = "dpcg.abaqus.cli:main"
+dpcg-train = "dpcg.train:main"
+dpcg-benchmark = "dpcg.benchmark:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dpcg"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/dpcg/_native" = "dpcg/_native"
+"src/dpcg/io/abaqus_case_library_rules.yaml" = "dpcg/io/abaqus_case_library_rules.yaml"
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/src/dpcg",
+  "/configs",
+  "/scripts",
+  "/tests",
+  "/README.md",
+  "/abaqus_model",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+extend-select = ["I"]
+ignore = ["E203"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["dpcg"]

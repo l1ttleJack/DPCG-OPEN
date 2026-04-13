@@ -1,0 +1,227 @@
+baselines:
+  pure_frame:
+    material_groups:
+      default_group: frame
+      groups:
+        frame: {}
+    quotas:
+      - split: train
+        family: A
+        count: 70
+      - split: val
+        family: A
+        count: 10
+      - split: iid
+        family: A
+        count: 10
+      - split: ood
+        family: A
+        count: 10
+      - split: train
+        family: B
+        count: 196
+      - split: val
+        family: B
+        count: 28
+      - split: iid
+        family: B
+        count: 28
+      - split: ood
+        family: B
+        count: 28
+      - split: train
+        family: BH
+        count: 84
+      - split: val
+        family: BH
+        count: 12
+      - split: iid
+        family: BH
+        count: 12
+      - split: ood
+        family: BH
+        count: 12
+    bh_only_quotas:
+      - split: train
+        family: BH
+        count: 84
+      - split: val
+        family: BH
+        count: 12
+      - split: iid
+        family: BH
+        count: 12
+      - split: ood
+        family: BH
+        count: 12
+    reference_condition:
+      source: master_stiffness
+      tol: 1.0e-8
+      maxiter: 20000
+    family_a:
+      alpha_ranges:
+        train:
+          - [0.7, 1.5]
+        val:
+          - [0.7, 1.5]
+        iid:
+          - [0.7, 1.5]
+        ood:
+          - [0.5, 0.7]
+          - [1.5, 2.0]
+    family_b:
+      sigma_ranges:
+        train:
+          frame:
+            - [0.08, 0.18]
+            - [0.18, 0.35]
+        val:
+          frame:
+            - [0.08, 0.18]
+            - [0.18, 0.35]
+        iid:
+          frame:
+            - [0.08, 0.18]
+            - [0.18, 0.35]
+        ood:
+          frame:
+            - [0.35, 0.55]
+      rho:
+        frame: 0.7
+      alpha_clip: [0.5, 2.0]
+    family_bh:
+      family_name: BH
+      pathological_dataset_suffix: -bh-v1
+      pilot_dir_name: bh_pilot
+      target_groups:
+        - frame
+      pilot_story_alphas:
+        frame: [1.0e-1, 3.0e-2, 1.0e-2]
+      pilot_band_alphas:
+        frame: [3.0e-2, 1.0e-2, 3.0e-3]
+      condition_ratio_min: 10.0
+      condition_ratio_max: 100.0
+      soft_alpha_log10_jitter: 0.1
+      other_alpha_range: [0.9, 1.1]
+
+  frame_soil_mixed:
+    material_groups:
+      default_group: frame
+      groups:
+        frame: {}
+        soil:
+          prefixes: ["SOIL-"]
+    quotas:
+      - split: train
+        family: A
+        count: 70
+      - split: val
+        family: A
+        count: 10
+      - split: iid
+        family: A
+        count: 10
+      - split: ood
+        family: A
+        count: 10
+      - split: train
+        family: B
+        count: 196
+      - split: val
+        family: B
+        count: 28
+      - split: iid
+        family: B
+        count: 28
+      - split: ood
+        family: B
+        count: 28
+      - split: train
+        family: BH
+        count: 84
+      - split: val
+        family: BH
+        count: 12
+      - split: iid
+        family: BH
+        count: 12
+      - split: ood
+        family: BH
+        count: 12
+    bh_only_quotas:
+      - split: train
+        family: BH
+        count: 84
+      - split: val
+        family: BH
+        count: 12
+      - split: iid
+        family: BH
+        count: 12
+      - split: ood
+        family: BH
+        count: 12
+    reference_condition:
+      source: master_stiffness
+      tol: 1.0e-8
+      maxiter: 20000
+    family_a:
+      alpha_ranges:
+        train:
+          - [0.7, 1.5]
+        val:
+          - [0.7, 1.5]
+        iid:
+          - [0.7, 1.5]
+        ood:
+          - [0.5, 0.7]
+          - [1.5, 2.0]
+    family_b:
+      sigma_ranges:
+        train:
+          frame:
+            - [0.08, 0.18]
+            - [0.18, 0.35]
+          soil:
+            - [0.08, 0.18]
+            - [0.18, 0.35]
+        val:
+          frame:
+            - [0.08, 0.18]
+            - [0.18, 0.35]
+          soil:
+            - [0.08, 0.18]
+            - [0.18, 0.35]
+        iid:
+          frame:
+            - [0.08, 0.18]
+            - [0.18, 0.35]
+          soil:
+            - [0.08, 0.18]
+            - [0.18, 0.35]
+        ood:
+          frame:
+            - [0.35, 0.55]
+          soil:
+            - [0.35, 0.55]
+      rho:
+        frame: 0.7
+        soil: 0.8
+      alpha_clip: [0.5, 2.0]
+    family_bh:
+      family_name: BH
+      pathological_dataset_suffix: -bh-v1
+      pilot_dir_name: bh_pilot
+      target_groups:
+        - frame
+        - soil
+      pilot_story_alphas:
+        frame: [1.0e-1, 3.0e-2, 1.0e-2]
+        soil: [1.0e-1, 5.0e-2, 1.0e-2]
+      pilot_band_alphas:
+        frame: [3.0e-2, 1.0e-2, 3.0e-3]
+        soil: [8.0e-2, 5.0e-2, 1.0e-2]
+      condition_ratio_min: 10.0
+      condition_ratio_max: 100.0
+      soft_alpha_log10_jitter: 0.04
+      other_alpha_range: [0.95, 1.05]

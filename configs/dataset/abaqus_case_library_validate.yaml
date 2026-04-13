@@ -1,0 +1,11 @@
+validate_abaqus_case_library:
+  # Optional: point to a custom dataset-rules YAML.
+  # dataset_rules_config: "./configs/dataset/abaqus_case_library_rules.yaml"
+  dataset_root: "./data/frame99-7500"
+  skip_condition_number: false
+  condition_number_tol: 1.0e-8
+  condition_number_maxiter: 20000
+  collect_frame33_bh_pilot_results: false
+  collect_pilot_results: false
+  dataset_id: "frame99-7500"
+  baseline_type: "pure_frame"

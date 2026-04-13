@@ -1,0 +1,47 @@
+train:
+  SEED: 42
+  DEVICE: "cuda"
+  DATA_ROOT: "./data/frame99-7500/npz_release"
+  DATASET_SPLIT_SOURCE: "meta_json"
+  PC_TRAIN: 350
+  PC_VAL: 50
+  PC_TEST: 0
+  MASK_PERCENTILE: -1.0
+  TRAIN_MAX_SAMPLES_PER_SPLIT: null
+  VAL_MAX_SAMPLES_PER_SPLIT: null
+  IID_MAX_SAMPLES_PER_SPLIT: null
+  OOD_MAX_SAMPLES_PER_SPLIT: null
+  EPOCHS: 100
+  VAL_EPOCH: 1
+  INI_LR: 1.0e-3
+  DIAG_STRATEGY: "learned_exp"
+  LOG-DIR_M: "./runs/sunet0_tail_frame"
+  TRAIN_FILE_M: "./runs/sunet0_tail_frame/best.ckpt"
+  LAST_CHECKPOINT: "./runs/sunet0_tail_frame/last.ckpt"
+  SPLIT_MANIFEST: "./runs/sunet0_tail_frame/split_manifest.json"
+  MODEL_STATE_M: null
+  MODEL_KWARGS:
+    channels: [8, 16, 32, 48, 64]
+    block_depth: 1
+    use_sparse_head: true
+    tail_expansion_layers: 1
+    tail_kernel_size: 9
+  patience: 1000
+  SAVE_EVERY: 1
+  LOG_EVERY: 1
+  AMP: false
+  DIAG_PROFILE: false
+  GRAD_CLIP_NORM: null
+  GRAD_ACCUM_STEPS: 1
+  NUM_WORKERS: 0
+  PIN_MEMORY: false
+  PERSISTENT_WORKERS: false
+  PREFETCH_FACTOR: null
+  DROP_LAST: false
+  SHUFFLE_TRAIN: true
+  LOG_HISTOGRAMS: false
+  CACHE_SAMPLES: false
+  CACHE_GRAPH: false
+  scheduler:
+    name: null
+    kwargs: {}

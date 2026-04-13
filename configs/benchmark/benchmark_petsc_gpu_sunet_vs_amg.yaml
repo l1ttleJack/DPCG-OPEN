@@ -1,0 +1,62 @@
+# PETSc GPU benchmark template for the standard DPCG configuration on frame.
+train:
+  SEED: 42
+  DATA_ROOT: "./data/frame99-7500/npz_release"
+  DATASET_SPLIT_SOURCE: "meta_json"
+  PC_TRAIN: 350
+  PC_VAL: 50
+  PC_TEST: 50
+  MASK_PERCENTILE: -1.0
+  TRAIN_MAX_SAMPLES_PER_SPLIT: null
+  VAL_MAX_SAMPLES_PER_SPLIT: null
+  IID_MAX_SAMPLES_PER_SPLIT: null
+  OOD_MAX_SAMPLES_PER_SPLIT: null
+  IID_FAMILY_QUOTAS:
+    A: 10
+    B: 10
+    BH: 30
+  OOD_FAMILY_QUOTAS:
+    A: 10
+    B: 10
+    BH: 30
+  BENCHMARK_BACKEND: "petsc_gpu"
+  BENCHMARK_METHODS:
+    - none
+    - amg
+    - jacobi
+    - sgs
+    - ssor
+    - ic0
+    - learning
+  LEARNING_OUTPUT_KIND: "sparse_factor_L"
+  LEARNING_DIAG_STRATEGY: "learned_exp"
+  BENCHMARK_DEVICE: "cuda"
+  BENCHMARK_MAXITER: 100000
+  STEADY_FORWARD_REPEATS: 20
+  SSOR_OMEGA: 1.2
+  PETSC_OPTIONS: "-use_gpu_aware_mpi 0"
+  PETSC_AMG_BACKEND: "gamg"
+  PETSC_IC0_SHIFT_TYPE: "positive_definite"
+  PETSC_STRICT_GPU: true
+  PETSC_FACTOR_APPLY_MODE: "llt"
+  PETSC_FACTOR_SOLVE_MODE: "transformed_operator_native"
+  PETSC_LEARNING_PC_IMPL: "shell_native"
+  PETSC_LEARNING_INTERNAL_RTOL_RATIO: 1.0
+  CACHE_SAMPLES: false
+  CACHE_GRAPH: false
+  PETSC_COND_MODE: "accurate_ref"
+  ENABLE_SPECTRAL_METRICS: false
+  RESULTS_CSV: "./results/benchmark/petsc_gpu_sunet_vs_baselines_frame.csv"
+  RESIDUAL_DIR: "./results/benchmark/petsc_gpu_sunet_vs_baselines_frame_residuals"
+  LEARNING_MODELS:
+    - model_name: "sunet0"
+      label: "SU-net"
+      checkpoint_path: "./runs/sunet0_tail_frame/best.ckpt"
+      diag_strategy: "learned_exp"
+      mask_percentile: 0
+      model_kwargs:
+        channels: [8, 16, 32, 48, 64]
+        block_depth: 1
+        use_sparse_head: true
+        tail_expansion_layers: 1
+        tail_kernel_size: 9
